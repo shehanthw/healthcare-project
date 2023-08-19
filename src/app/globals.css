@@ -4,9 +4,17 @@
 
 
 .navbar-menu-top{
-    @apply p-2 text-sm flex items-center w-full h-[50px] hover:bg-neutral-600 text-neutral-50 cursor-pointer rounded-md whitespace-nowrap
+    @apply p-2 text-sm flex items-center w-full h-[50px] hover:bg-neutral-600 text-slate-200 cursor-pointer rounded-md whitespace-nowrap
 }
 
 .layout-transition {
     @apply transition-all delay-100
+}
+
+.btn {
+    @apply p-2 pl-4 pr-4 rounded
+}
+
+.btn-primary {
+    @apply bg-blue-700 text-neutral-100 hover:bg-blue-500 shadow-md shadow-neutral-500
 }

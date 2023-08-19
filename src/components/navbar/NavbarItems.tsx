@@ -26,11 +26,11 @@ const menuItems: NavMenuItems = [
     isActive: false,
     subItems: [
       {
-        subName: "View Drugs",
+        subName: "view drugs",
         path: "/drugs",
       },
       {
-        subName: "Create Drugs",
+        subName: "create & edit drugs",
         path: "/",
       },
     ],
@@ -42,8 +42,12 @@ const menuItems: NavMenuItems = [
     isActive: false,
     subItems: [
       {
-        subName: "View Users",
+        subName: "view users",
         path: "/users",
+      },
+      {
+        subName: "create & edit User",
+        path: "/users/create",
       },
     ],
   },

@@ -10,8 +10,14 @@ import { menuItems } from "./NavbarItems";
 import { useLayoutContext } from "@/contexts/NavbarContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Roboto } from "@next/font/google";
 
 type Props = {};
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["300"],
+});
 
 const Navbar = (props: Props) => {
   const { isOpen } = useLayoutContext();
@@ -37,7 +43,9 @@ const Navbar = (props: Props) => {
         </div>
       </div>
 
-      <div className="w-full flex items-center flex-col space-y-2 select-none">
+      <div
+        className={`w-full flex items-center flex-col space-y-2 select-none ${roboto.className}`}
+      >
         {/*------------------------------------> static navbar items that have no subItems*/}
 
         <Link
