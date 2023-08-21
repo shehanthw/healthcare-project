@@ -1,61 +1,73 @@
 "use client";
 
-import React from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 import UsersTable from "../../../components/users/UsersTable";
 import { AiOutlinePlus } from "react-icons/ai";
-import CreateUserForm from "@/components/users/CreateUserForm";
 import { useRouter } from "next/navigation";
-
-type UsersObject = {
-  id: number;
-  title: string;
-  manufacturingDate: string;
-  expiryDate: string;
-  availability: boolean;
-  quantity: number;
-}[];
+import { getUsers } from "@/app/services/UsersEndPoints";
+import FilterUsers from "@/components/users/FilterUsers";
+import { useLoaderContext } from "@/contexts/NavbarContext";
 
 const Users = () => {
   const router = useRouter();
-  const users: UsersObject = [
-    {
-      id: 1,
-      title: "Paracetamol",
-      manufacturingDate: "2023-05-01",
-      expiryDate: "2023-11-05",
-      availability: true,
-      quantity: 520,
-    },
-    {
-      id: 2,
-      title: "Piriton",
-      manufacturingDate: "2023-05-12",
-      expiryDate: "2023-11-30",
-      availability: true,
-      quantity: 8000,
-    },
-    {
-      id: 3,
-      title: "Piriton and elhhujj",
-      manufacturingDate: "2023-05-12",
-      expiryDate: "2023-11-30",
-      availability: true,
-      quantity: 8000,
-    },
-  ];
+  const { setLoaderOn } = useLoaderContext();
+  const [usersDataSet, setUsersDataSet] = useState([]);
+  const [isFilterOn, setFilterOn] = useState(false);
+  const [username, setUsername] = useState("");
+  const [role, setRole] = useState("");
+
+  const handleUserCreationButton = () => {
+    router.push("/users/create");
+    setLoaderOn(true);
+  };
+
+  const callGetUsersEndPoint = async () => {
+    const res = await getUsers(username, role);
+    setUsersDataSet(res);
+  };
+
+  useEffect(() => {
+    callGetUsersEndPoint();
+  }, []);
+
+  useEffect(() => {
+    callGetUsersEndPoint();
+  }, [username, role]);
 
   return (
     <div className="p-2">
-      <div className="w-full flex justify-end p-2">
+      <div className="w-full flex justify-between p-2">
+        {/* toggle filter users component on & off */}
         <button
-          onClick={() => router.push("/users/create")}
-          className="border-1 dark:bg-gray-600 hover:bg-gray-500 p-2 rounded-md shadow-sm text-neutral-100 shadow-neutral-500 cursor-pointer text-sm flex space-x-2 items-center"
+          className="btn btn-secondary"
+          onClick={() => setFilterOn(!isFilterOn)}
+        >
+          Filter
+        </button>
+
+        {/* conditionally render Filter users component */}
+        {isFilterOn ? (
+          <FilterUsers
+            setFilterOn={setFilterOn}
+            setUsername={setUsername}
+            setRole={setRole}
+          />
+        ) : (
+          <div className="layout-transition"></div>
+        )}
+
+        {/* redirect to user creation page */}
+        <button
+          onClick={() => handleUserCreationButton()}
+          className="btn btn-secondary flex space-x-2 items-center"
         >
           <span>Create User</span>
           <AiOutlinePlus size={15} />
         </button>
       </div>
-      <UsersTable data={users} />
+
+      {/* render User table component */}
+      <UsersTable data={usersDataSet} />
     </div>
   );
 };

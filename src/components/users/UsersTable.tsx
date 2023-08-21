@@ -1,17 +1,35 @@
-import React from "react";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { AiFillEdit, AiFillDelete, AiOutlineCloseCircle } from "react-icons/ai";
+import { BeatLoader } from "react-spinners";
 
 type UserItem = {
   id: number;
-  title: string;
-  manufacturingDate: string;
-  expiryDate: string;
-  availability: boolean;
-  quantity: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
 };
+
 type Props = { data: UserItem[] };
 
 const UsersTable = (props: Props) => {
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const dataLength: number = props.data.length;
+
+    if (dataLength < 1) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+
+    console.log();
+  }, [props.data.length]);
+
   return (
     <div className="p-2 relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -21,78 +39,87 @@ const UsersTable = (props: Props) => {
               id
             </th>
             <th scope="col" className="px-6 py-3">
-              drug title
+              Username
             </th>
             <th scope="col" className="px-6 py-3">
-              manufacturing date
+              First Name
             </th>
             <th scope="col" className="px-6 py-3">
-              expiry date
+              Last Name
             </th>
             <th scope="col" className="px-6 py-3">
-              availability
+              Email
             </th>
             <th scope="col" className="px-6 py-3">
-              quantity
+              Role
             </th>
             <th scope="col" className="px-6 py-3"></th>
           </tr>
         </thead>
 
-        <tbody>
-          {props.data.map((item, index) => (
-            <tr className="bg-white border-b dark:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-200 text-xs">
-              <td
-                scope="row"
-                className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
-              >
-                {item.id}
-              </td>
-              <td
-                scope="row"
-                className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[200px] overflow-auto"
-              >
-                {item.title}
-              </td>
-              <td
-                scope="row"
-                className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
-              >
-                {item.manufacturingDate}
-              </td>
-              <td
-                scope="row"
-                className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
-              >
-                {item.expiryDate}
-              </td>
-              <td
-                scope="row"
-                className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
-              >
-                {item.availability}
-              </td>
-              <td
-                scope="row"
-                className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
-              >
-                {item.quantity}
-              </td>
-              <td
-                scope="row"
-                className="px-2 py-2 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto flex space-x-3"
-              >
-                <AiFillEdit
-                  size={20}
-                  className="text-blue-500 cursor-pointer hover:text-blue-900"
-                />
-                <AiFillDelete
-                  size={20}
-                  className="text-red-500 cursor-pointer hover:text-red-900"
-                />
-              </td>
+        <tbody className="relative">
+          {isLoading ? (
+            <tr className="text-2xl text-black flex w-full justify-center p-2">
+              <BeatLoader size={10} color={"#36d7b7"} />
             </tr>
-          ))}
+          ) : (
+            props.data.map((item, index) => (
+              <tr
+                className="bg-white border-b dark:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-200 text-xs"
+                key={index}
+              >
+                <td
+                  scope="row"
+                  className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
+                >
+                  {index + 1}
+                </td>
+                <td
+                  scope="row"
+                  className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[200px] overflow-auto"
+                >
+                  {item.username}
+                </td>
+                <td
+                  scope="row"
+                  className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
+                >
+                  {item.firstName}
+                </td>
+                <td
+                  scope="row"
+                  className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
+                >
+                  {item.lastName}
+                </td>
+                <td
+                  scope="row"
+                  className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
+                >
+                  {item.email}
+                </td>
+                <td
+                  scope="row"
+                  className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
+                >
+                  {item.role}
+                </td>
+                <td
+                  scope="row"
+                  className="px-2 py-2 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto flex space-x-3"
+                >
+                  <AiFillEdit
+                    size={20}
+                    className="text-blue-500 cursor-pointer hover:text-blue-900"
+                  />
+                  <AiFillDelete
+                    size={20}
+                    className="text-red-500 cursor-pointer hover:text-red-900"
+                  />
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

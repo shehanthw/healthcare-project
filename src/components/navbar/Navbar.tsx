@@ -10,7 +10,8 @@ import { menuItems } from "./NavbarItems";
 import { useLayoutContext } from "@/contexts/NavbarContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Roboto } from "@next/font/google";
+import { Roboto } from "next/font/google";
+import { useLoaderContext } from "@/contexts/NavbarContext";
 
 type Props = {};
 
@@ -23,11 +24,16 @@ const Navbar = (props: Props) => {
   const { isOpen } = useLayoutContext();
   const [items, setMenuItems] = useState(menuItems);
   const pathname = usePathname();
+  const { isLoaderOn, setLoaderOn } = useLoaderContext();
 
   const handleMenuItemClick = (index: number) => {
     const updatedMenuItems = [...items];
     updatedMenuItems[index].isActive = !updatedMenuItems[index].isActive;
     setMenuItems(updatedMenuItems);
+  };
+
+  const handleLoader = () => {
+    setLoaderOn(true);
   };
 
   return (
@@ -53,6 +59,7 @@ const Navbar = (props: Props) => {
             pathname == "/dashboard" ? "bg-neutral-600" : ""
           } `}
           href="/dashboard"
+          onClick={() => handleLoader()}
         >
           <span className="w-[15%] flex">
             <AiOutlineDesktop size={22} />
@@ -89,6 +96,7 @@ const Navbar = (props: Props) => {
                   }  navbar-menu-top layout-transition`}
                   key={index}
                   href={subItem.path}
+                  onClick={() => handleLoader()}
                 >
                   <span className="w-[15%] flex"></span>
                   <span className="w-[65%]">{subItem.subName}</span>
