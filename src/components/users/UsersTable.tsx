@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { AiFillEdit, AiFillDelete, AiOutlineCloseCircle } from "react-icons/ai";
 import { BeatLoader } from "react-spinners";
 
-type Props = { data: any; usersApiMessage: string };
+type Props = { data: any; usersApiMessage?: string };
 
 const UsersTable = (props: Props) => {
   const [isLoading, setLoading] = useState(false);

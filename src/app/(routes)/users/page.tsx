@@ -14,8 +14,8 @@ const Users = () => {
   const [usersDataSet, setUsersDataSet] = useState([]);
   const [usersApiMessage, setUsersApiMessage] = useState<string>();
   const [isFilterOn, setFilterOn] = useState(false);
-  const [username, setUsername] = useState("");
-  const [role, setRole] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [role, setRole] = useState<string>("");
 
   const handleUserCreationButton = () => {
     router.push("/users/create");
