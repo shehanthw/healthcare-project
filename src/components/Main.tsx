@@ -20,7 +20,7 @@ const Layout = ({ children }: Props) => {
     <div
       className={`fixed ${
         isOpen ? "ml-[230px] w-[calc(100vw-230px)]" : "w-[100vw]"
-      } mt-[50px] h-[calc(100vh-50px)] bg-neutral-100 layout-transition overflow-auto`}
+      } mt-[50px] h-[calc(100vh-50px)] bg-neutral-100 layout-transition`}
     >
       {isLoaderOn ? <LoaderPage /> : ""}
       {children}
