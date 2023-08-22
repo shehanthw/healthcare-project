@@ -32,7 +32,7 @@ const formItems: FormItems = [
   },
   {
     title: "Role",
-    id: "userRole",
+    id: "role",
     type: "text",
     required: "Role is required",
   },

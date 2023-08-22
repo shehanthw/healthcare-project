@@ -12,6 +12,7 @@ const Users = () => {
   const router = useRouter();
   const { setLoaderOn } = useLoaderContext();
   const [usersDataSet, setUsersDataSet] = useState([]);
+  const [usersApiMessage, setUsersApiMessage] = useState<string>();
   const [isFilterOn, setFilterOn] = useState(false);
   const [username, setUsername] = useState("");
   const [role, setRole] = useState("");
@@ -23,7 +24,8 @@ const Users = () => {
 
   const callGetUsersEndPoint = async () => {
     const res = await getUsers(username, role);
-    setUsersDataSet(res);
+    setUsersDataSet(res.users);
+    setUsersApiMessage(res.message);
   };
 
   useEffect(() => {
@@ -67,7 +69,9 @@ const Users = () => {
       </div>
 
       {/* render User table component */}
-      <UsersTable data={usersDataSet} />
+      <div className="w-full border">
+        <UsersTable data={usersDataSet} usersApiMessage={usersApiMessage} />
+      </div>
     </div>
   );
 };

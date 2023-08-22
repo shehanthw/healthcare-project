@@ -4,36 +4,26 @@ import React, { useEffect, useState } from "react";
 import { AiFillEdit, AiFillDelete, AiOutlineCloseCircle } from "react-icons/ai";
 import { BeatLoader } from "react-spinners";
 
-type UserItem = {
-  id: number;
-  username: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string;
-};
-
-type Props = { data: UserItem[] };
+type Props = { data: any; usersApiMessage: string };
 
 const UsersTable = (props: Props) => {
   const [isLoading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<boolean>(false);
 
   useEffect(() => {
-    const dataLength: number = props.data.length;
-
-    if (dataLength < 1) {
+    if (props.usersApiMessage === "no users found") {
+      setErrorMessage(true);
+    } else if (props.data.length < 1) {
       setLoading(true);
     } else {
       setLoading(false);
     }
-
-    console.log();
-  }, [props.data.length]);
+  }, [props.data, props.usersApiMessage]);
 
   return (
-    <div className="p-2 relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div className="p-2 relative overflow-x-auto shadow-md sm:rounded-lg max-h-[500px]">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0 z-10">
           <tr>
             <th scope="col" className="px-6 py-3">
               id
@@ -59,11 +49,17 @@ const UsersTable = (props: Props) => {
 
         <tbody className="relative">
           {isLoading ? (
-            <tr className="text-2xl text-black flex w-full justify-center p-2">
+            <tr className="text-2xl text-black px-6 py-4 text-center flex justify-center">
               <BeatLoader size={10} color={"#36d7b7"} />
             </tr>
+          ) : props.data.length === 0 ? (
+            <tr>
+              <td colSpan={7} className="px-6 py-4 text-center text-gray-500">
+                No data found.
+              </td>
+            </tr>
           ) : (
-            props.data.map((item, index) => (
+            props.data.map((item: any, index: number) => (
               <tr
                 className="bg-white border-b dark:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-200 text-xs"
                 key={index}

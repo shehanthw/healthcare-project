@@ -7,6 +7,7 @@ import { formItems } from "./UserFormItems";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BiUserCircle } from "react-icons/bi";
+import { postUser } from "@/app/services/UsersEndPoints";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -24,7 +25,7 @@ const userCreationSchema = z
     firstName: z.string().min(1, "First Name is required"),
     lastName: z.string().min(1, "Last Name is required"),
     email: z.string().email(),
-    userRole: z.string().min(1, "Role is required"),
+    role: z.string().min(1, "Role is required"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     confPassword: z.string(),
   })
@@ -44,8 +45,9 @@ const CreateUser = (props: Props) => {
   });
 
   const onSubmit = async (data: FieldValues) => {
-    console.log("Form errors:", errors);
-    console.log(data);
+    const { confPassword, ...postData } = data;
+    const res = await postUser(postData);
+    console.log(res);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     reset();
   };

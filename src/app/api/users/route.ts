@@ -10,8 +10,11 @@ export async function POST(request: Request) {
     const validatedData = userSchema.parse(data);
 
     await connectMongoDb();
-    await Users.create(validatedData);
-    return NextResponse.json({ message: "User created" }, { status: 200 });
+    const res = await Users.create(validatedData);
+    return NextResponse.json(
+      { message: `user : ${validatedData.username} created` },
+      { status: 200 }
+    );
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
@@ -37,20 +40,60 @@ export async function GET(request: NextRequest) {
     let response;
 
     if (username && role) {
-      // Filter by both username and role
       response = await Users.find({ username, role });
+
+      if (response.length === 0) {
+        return NextResponse.json({
+          users: response,
+          message: "no users found",
+        });
+      } else {
+        return NextResponse.json({
+          users: response,
+        });
+      }
+
+      console.log();
     } else if (username) {
       // Filter by username
       response = await Users.find({ username });
+      if (response.length === 0) {
+        return NextResponse.json({
+          users: response,
+          message: "no users found",
+        });
+      } else {
+        return NextResponse.json({
+          users: response,
+        });
+      }
     } else if (role) {
       // Filter by role
       response = await Users.find({ role });
+      if (response.length === 0) {
+        return NextResponse.json({
+          users: response,
+          message: "no users found",
+        });
+      } else {
+        return NextResponse.json({
+          users: response,
+        });
+      }
     } else {
       // No filters, get all users
       response = await Users.find();
+      if (response.length === 0) {
+        return NextResponse.json({
+          users: response,
+          message: "no users found",
+        });
+      } else {
+        return NextResponse.json({
+          users: response,
+        });
+      }
     }
-
-    return NextResponse.json({ users: response });
   } catch (error) {
     console.log(error);
     return NextResponse.json({ error: error }, { status: 500 });
