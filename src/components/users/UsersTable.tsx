@@ -21,9 +21,9 @@ const UsersTable = (props: Props) => {
   }, [props.data, props.usersApiMessage]);
 
   return (
-    <div className="p-2 relative overflow-x-auto shadow-md sm:rounded-lg max-h-[500px]">
+    <div className="p-2 relative shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0 z-10">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-200 dark:text-gray-400 h-[50px] z-10">
           <tr>
             <th scope="col" className="px-6 py-3">
               id
@@ -61,48 +61,48 @@ const UsersTable = (props: Props) => {
           ) : (
             props.data.map((item: any, index: number) => (
               <tr
-                className="bg-white border-b dark:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-200 text-xs"
+                className="bg-white border-b hover:bg-gray-200 dark:hover:bg-gray-50 text-xs text-gray-500 h-[50px]"
                 key={index}
               >
                 <td
                   scope="row"
-                  className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
+                  className="px-6 py-4 font-medium whitespace-nowrap max-w-[100px] overflow-auto"
                 >
                   {index + 1}
                 </td>
                 <td
                   scope="row"
-                  className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[200px] overflow-auto"
+                  className="px-6 py-4 font-medium max-w-[200px] break-words whitespace-break-spaces"
                 >
                   {item.username}
                 </td>
                 <td
                   scope="row"
-                  className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
+                  className="px-6 py-4 font-medium max-w-[100px] break-words whitespace-break-spaces"
                 >
                   {item.firstName}
                 </td>
                 <td
                   scope="row"
-                  className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
+                  className="px-6 py-4 font-medium max-w-[100px] break-words whitespace-break-spaces"
                 >
                   {item.lastName}
                 </td>
                 <td
                   scope="row"
-                  className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
+                  className="px-6 py-4 font-medium max-w-[100px] break-words whitespace-break-spaces"
                 >
                   {item.email}
                 </td>
                 <td
                   scope="row"
-                  className="px-6 py-4 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto"
+                  className="px-6 py-4 font-medium max-w-[100px] break-words whitespace-break-spaces"
                 >
                   {item.role}
                 </td>
                 <td
                   scope="row"
-                  className="px-2 py-2 font-medium text-neutral-700 whitespace-nowrap max-w-[100px] overflow-auto flex space-x-3"
+                  className="px-2 py-2 font-medium max-w-[100px] break-words whitespace-break-spaces flex space-x-3"
                 >
                   <AiFillEdit
                     size={20}

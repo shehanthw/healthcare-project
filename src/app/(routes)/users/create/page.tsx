@@ -53,10 +53,10 @@ const CreateUser = (props: Props) => {
   };
 
   return (
-    <div className="p-2 flex flex-col items-center w-full">
+    <div className="p-2 flex flex-col items-center w-full overflow-auto h-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`flex flex-col items-center p-4 w-[80%] space-y-1 text-neutral-700 text-sm ${roboto.className} bg-white rounded-2xl shadow-sm shadow-neutral-500`}
+        className={`flex flex-col items-center p-4 w-[80%] space-y-3 text-neutral-700 text-sm ${roboto.className} bg-white rounded-2xl shadow-sm shadow-neutral-500`}
       >
         <div className="text-md text-slate-500 flex items-center space-x-2">
           <BiUserCircle size={20} />
@@ -67,11 +67,11 @@ const CreateUser = (props: Props) => {
             className="flex flex-col w-full justify-center items-center"
             key={index}
           >
-            <span className="flex w-[60%] justify-start space-x-1">
-              <span className="text-red-600">*</span> <span>{item.title}</span>
+            <span className="flex w-[60%] h-[25px] justify-start space-x-1 text-gray-500">
+              <span>{item.title}</span>
             </span>
             <input
-              className="p-1 border border-neutral-300 w-[60%] outline-none h-[32px]"
+              className="form-input"
               type={item.type}
               id={item.id}
               placeholder={`Enter ${item.title}`}
@@ -86,7 +86,7 @@ const CreateUser = (props: Props) => {
           </div>
         ))}
         <div className="w-[60%]">
-          <button className="btn btn-primary" type="submit">
+          <button className="btn btn-secondary" type="submit">
             Submit
           </button>
         </div>

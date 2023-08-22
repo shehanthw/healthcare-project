@@ -37,7 +37,7 @@ const Users = () => {
   }, [username, role]);
 
   return (
-    <div className="p-2">
+    <div className="p-2 overflow-auto h-full">
       <div className="w-full flex justify-between p-2">
         {/* toggle filter users component on & off */}
         <button
@@ -55,7 +55,7 @@ const Users = () => {
             setRole={setRole}
           />
         ) : (
-          <div className="layout-transition"></div>
+          <div className="layout-transition ease-in-out"></div>
         )}
 
         {/* redirect to user creation page */}

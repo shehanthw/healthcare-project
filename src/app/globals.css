@@ -4,7 +4,11 @@
 
 
 .navbar-menu-top{
-    @apply p-2 text-sm flex items-center w-full h-[50px] hover:bg-neutral-600 text-slate-200 cursor-pointer rounded-md whitespace-nowrap
+    @apply p-2 text-sm flex items-center w-full h-[50px] hover:bg-blue-900 text-gray-400 hover:text-gray-200 cursor-pointer rounded-md whitespace-nowrap
+}
+
+.submenu-menu-top{
+    @apply p-2 text-sm flex items-center w-full h-[50px] hover:bg-blue-900 text-gray-400 hover:text-gray-200 cursor-pointer rounded-md whitespace-nowrap
 }
 
 .layout-transition {
@@ -20,5 +24,9 @@
 }
 
 .btn-secondary{
-    @apply bg-slate-600 text-neutral-100 hover:bg-slate-500 shadow-md shadow-neutral-500 text-sm
+    @apply bg-[#4482FF] text-neutral-100 hover:bg-blue-400 shadow-sm shadow-neutral-500 text-sm
+}
+
+.form-input{
+    @apply p-2 border border-gray-200 w-[60%] text-gray-500 outline-none h-[35px] rounded-sm focus:ring-1 focus:ring-blue-300 ring-opacity-50 focus:ease-in-out placeholder-gray-300
 }

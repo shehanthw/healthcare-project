@@ -1,14 +1,12 @@
-import {
-  AiOutlineUsergroupAdd,
-  AiOutlineMedicineBox,
-  AiOutlineDesktop,
-} from "react-icons/ai";
+import { AiFillMedicineBox, AiFillEdit } from "react-icons/ai";
+import { BiSolidUserPlus } from "react-icons/bi";
 
 type Props = {};
 
 type SubItems = {
   subName: string;
   path: string;
+  icon: string;
 }[];
 
 type NavMenuItems = {
@@ -21,33 +19,55 @@ type NavMenuItems = {
 
 const menuItems: NavMenuItems = [
   {
-    icon: <AiOutlineMedicineBox size={22} />,
+    icon: <AiFillMedicineBox size={20} />,
     title: "Drugs Manager",
     isActive: false,
     subItems: [
       {
-        subName: "view drugs",
+        subName: "View Drugs",
         path: "/drugs",
+        icon: "VD",
       },
       {
-        subName: "create & edit drugs",
+        subName: "Create & Edit Drugs",
         path: "/",
+        icon: "ED",
       },
     ],
   },
 
   {
-    icon: <AiOutlineUsergroupAdd size={22} />,
+    icon: <AiFillEdit size={20} />,
+    title: "Document Manager",
+    isActive: false,
+    subItems: [
+      {
+        subName: "View Documents",
+        path: "/documents",
+        icon: "VU",
+      },
+      {
+        subName: "Create & Edit Documents",
+        path: "/documents/create",
+        icon: "EU",
+      },
+    ],
+  },
+
+  {
+    icon: <BiSolidUserPlus size={22} />,
     title: "User Manager",
     isActive: false,
     subItems: [
       {
-        subName: "view users",
+        subName: "View Users",
         path: "/users",
+        icon: "VU",
       },
       {
-        subName: "create & edit User",
+        subName: "Create & Edit User",
         path: "/users/create",
+        icon: "EU",
       },
     ],
   },

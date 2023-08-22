@@ -29,13 +29,13 @@ const FilterUsers = (props: Props) => {
   return (
     <div className="absolute layout-transition z-10 w-full h-full bg-neutral-400 bg-opacity-10 flex flex-col justify-center items-center backdrop-blur-sm backdrop-filter">
       <form
-        className="w-[30%] h-[30%] bg-white shadow-md shadow-neutral-500 rounded-md flex flex-col text-neutral-700"
+        className="w-[30%] h-[30%] bg-white shadow-md shadow-neutral-300 rounded-sm flex flex-col text-neutral-700 space-y-3"
         onSubmit={(e) => handleForm(e)}
       >
-        <span className="text-sm p-2 font-medium flex justify-center relative">
+        <span className="text-sm h-[50px] font-medium flex pl-4 relative border items-center">
           Filter Users
           <div
-            className="absolute right-0 mr-1 top-0 mt-2"
+            className="absolute right-0 mr-1 top-0 mt-3"
             onClick={() => props.setFilterOn(false)}
           >
             <AiFillCloseCircle
@@ -45,43 +45,31 @@ const FilterUsers = (props: Props) => {
           </div>
         </span>
         {/* search by username */}
-        <div className="p-2 space-x-4 text-sm flex items-center">
-          <input
-            type="checkbox"
-            className="h-4 text-neutral-600 accent-green-500 w-[5%]"
-            onChange={(e) => handleChange(e)}
-          />
-          <span className="w-[20%]">Username</span>
-          <input
-            type="text"
-            className="p-1 pl-3 border border-neutral-300 w-[60%] outline-none h-[32px] focus:ring-blue-500/50 ring-offset-blue-500 focus:ring-1"
-            disabled={isChecked ? false : true}
-            id="username"
-            name="username"
-          />
+        <div className="flex w-full text-xs justify-start pl-4">
+          <div className="flex w-[50%] flex-col space-y-3">
+            <span className="w-[30%]">Username</span>
+            <input
+              type="text"
+              className="p-2 border border-neutral-300 w-[90%] outline-none h-[32px] focus:ring-blue-500/50 ring-offset-blue-500 focus:ring-1"
+              id="username"
+              name="username"
+            />
+          </div>
+
+          {/* search by role */}
+          <div className="flex  w-[50%] flex-col space-y-3">
+            <span className="w-[30%]">Role</span>
+            <input
+              type="text"
+              className="p-2 border border-neutral-300 w-[90%] outline-none h-[32px] focus:ring-blue-500/50 ring-offset-blue-500 focus:ring-1"
+              id="role"
+              name="role"
+            />
+          </div>
         </div>
 
-        {/* search by role */}
-        <div className="p-2 space-x-4 text-sm flex items-center">
-          <input
-            type="checkbox"
-            className="h-4 text-neutral-600 accent-green-500 w-[5%]"
-            onChange={(e) => handleChange(e)}
-          />
-          <span className="w-[20%]">Role</span>
-          <input
-            type="text"
-            className="p-1 pl-3 border border-neutral-300 w-[60%] outline-none h-[32px] focus:ring-blue-500/50 ring-offset-blue-500 focus:ring-1"
-            disabled={isChecked ? false : true}
-            id="role"
-            name="role"
-          />
-        </div>
-
-        <div className="p-2 space-x-4 text-sm flex items-center">
-          <span className="w-[5%]"></span>
-          <span className="w-[20%]"></span>
-          <button className="btn btn-primary">Search</button>
+        <div className="p-2 pl-4 space-x-4 text-sm flex items-center">
+          <button className="btn btn-secondary">Search</button>
         </div>
       </form>
     </div>
