@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { getUsers } from "@/app/services/UsersEndPoints";
 import FilterUsers from "@/components/users/FilterUsers";
 import { useLoaderContext } from "@/contexts/NavbarContext";
+import CreateUserForm from "@/components/users/CreateUserForm";
 
 const Users = () => {
   const router = useRouter();
@@ -14,12 +15,13 @@ const Users = () => {
   const [usersDataSet, setUsersDataSet] = useState([]);
   const [usersApiMessage, setUsersApiMessage] = useState<string>();
   const [isFilterOn, setFilterOn] = useState(false);
+  const [isCreateUserFormOn, setCreateUserFormOn] = useState(false);
+
   const [username, setUsername] = useState<string>("");
   const [role, setRole] = useState<string>("");
 
   const handleUserCreationButton = () => {
-    router.push("/users/create");
-    setLoaderOn(true);
+    setCreateUserFormOn(true);
   };
 
   const callGetUsersEndPoint = async () => {
@@ -34,10 +36,13 @@ const Users = () => {
 
   useEffect(() => {
     callGetUsersEndPoint();
-  }, [username, role]);
+  }, [username, role, isCreateUserFormOn]);
 
   return (
-    <div className="p-2 overflow-auto h-full">
+    <div className="overflow-auto h-full">
+      {isCreateUserFormOn && (
+        <CreateUserForm setCreateUserFormOn={setCreateUserFormOn} />
+      )}
       <div className="w-full flex justify-between p-2">
         {/* toggle filter users component on & off */}
         <button
