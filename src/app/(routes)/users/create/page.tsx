@@ -71,7 +71,7 @@ const CreateUser = (props: Props) => {
               <span>{item.title}</span>
             </span>
             <input
-              className="form-input"
+              className="form-input w-[60%] h-[35px]"
               type={item.type}
               id={item.id}
               placeholder={`Enter ${item.title}`}
