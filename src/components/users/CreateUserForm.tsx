@@ -76,7 +76,10 @@ const CreateUserForm = (props: Props) => {
         </div>
 
         {formItems.map((item, index) => (
-          <div className="flex flex-col pl-6 pt-2 space-y-1 text-sm">
+          <div
+            className="flex flex-col pl-6 pt-2 space-y-1 text-sm"
+            key={index}
+          >
             <span className="text-gray-500">{item.title}</span>
             <input
               id={item.id}
