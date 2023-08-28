@@ -10,14 +10,14 @@ import { menuItems } from "./NavbarItems";
 import { useLayoutContext } from "@/contexts/NavbarContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Inter } from "next/font/google";
+import { Mulish } from "next/font/google";
 import { useLoaderContext } from "@/contexts/NavbarContext";
 
 type Props = {};
 
-const roboto = Inter({
+const roboto = Mulish({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["500"],
 });
 
 const Navbar = (props: Props) => {

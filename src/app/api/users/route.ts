@@ -37,6 +37,7 @@ export async function GET(request: NextRequest) {
     const queryParams = request.nextUrl.searchParams;
     const username = queryParams.get("username");
     const role = queryParams.get("role");
+    const id = queryParams.get("_id");
     let response;
 
     if (username && role) {
@@ -70,6 +71,19 @@ export async function GET(request: NextRequest) {
     } else if (role) {
       // Filter by role
       response = await Users.find({ role });
+      if (response.length === 0) {
+        return NextResponse.json({
+          users: response,
+          message: "no users found",
+        });
+      } else {
+        return NextResponse.json({
+          users: response,
+        });
+      }
+    } else if (id) {
+      // Filter by id
+      response = await Users.findById(id);
       if (response.length === 0) {
         return NextResponse.json({
           users: response,

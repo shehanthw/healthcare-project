@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar/Navbar";
 import Header from "@/components/header/Header";
 import LayoutContextProvider from "../contexts/NavbarContext";
 import Main from "@/components/Main";
+import { useToast } from "@/components/common/Toast";
 
 const inter = Inter({ subsets: ["latin"] });
 

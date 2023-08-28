@@ -1,13 +1,14 @@
 "use client";
 import { Roboto } from "next/font/google";
 import { resolve } from "path";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { formItems } from "@/components/users/UserFormItems";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AiFillCloseCircle } from "react-icons/ai";
-import { postUser } from "@/app/services/UsersEndPoints";
+import { getUsers, postUser, putUser } from "@/app/services/UsersEndPoints";
+import { useLoaderContext } from "@/contexts/NavbarContext";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -15,7 +16,9 @@ const roboto = Roboto({
 });
 
 type Props = {
-  setCreateUserFormOn: Dispatch<SetStateAction<boolean>>;
+  setUpdateUserFormOn: Dispatch<SetStateAction<boolean>>;
+  userToUpdate?: UserData; // Provide existing user data for update
+  updateId: string;
   showToast: any;
 };
 
@@ -46,24 +49,41 @@ const userCreationSchema = z
     path: ["confPassword"],
   });
 
-const CreateUserForm = (props: Props) => {
+const UpdateUserForm = (props: Props) => {
+  const { setLoaderOn } = useLoaderContext();
+
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(userCreationSchema),
   });
 
+  const existingUserData = async () => {
+    setLoaderOn(true);
+    const res = await getUsers("", "", props.updateId);
+    setValue("username", res.users.username);
+    setValue("firstName", res.users.firstName);
+    setValue("lastName", res.users.lastName);
+    setValue("email", res.users.email);
+    setValue("role", res.users.role);
+    setLoaderOn(false);
+  };
+
   const onSubmit = async (data: FieldValues) => {
-    const { confPassword, ...postData } = data;
-    const res = await postUser(postData);
-    props.setCreateUserFormOn(false);
+    const res = await putUser(props.updateId, data);
+    props.setUpdateUserFormOn(false);
+    props.showToast("success", "user is updated successfully");
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    props.showToast("success", res);
     reset();
   };
+
+  useEffect(() => {
+    existingUserData();
+  }, [props.updateId]);
   return (
     <div className="absolute bg-black w-full h-full z-30 overflow-auto bg-opacity-10 backdrop-blur-sm backdrop-filter flex justify-center">
       <form
@@ -74,10 +94,10 @@ const CreateUserForm = (props: Props) => {
           id="title"
           className="h-[60px] flex items-center pl-6 border font-medium text-gray-600 relative"
         >
-          Add New User
+          Update User
           <div
             className="absolute right-0 mr-2 top-0 mt-4"
-            onClick={() => props.setCreateUserFormOn(false)}
+            onClick={() => props.setUpdateUserFormOn(false)}
           >
             <AiFillCloseCircle
               size={25}
@@ -109,7 +129,7 @@ const CreateUserForm = (props: Props) => {
 
         <div className="w-[60%] p-6">
           <button className="btn btn-secondary" type="submit">
-            Submit
+            Update
           </button>
         </div>
       </form>
@@ -117,4 +137,4 @@ const CreateUserForm = (props: Props) => {
   );
 };
 
-export default CreateUserForm;
+export default UpdateUserForm;
