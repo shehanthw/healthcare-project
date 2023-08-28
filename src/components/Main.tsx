@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import { useLayoutContext, useLoaderContext } from "@/contexts/NavbarContext";
 import { usePathname } from "next/navigation";
 import LoaderPage from "./common/LoaderPage";
-
 type Props = { children: React.ReactNode };
 
 const Layout = ({ children }: Props) => {

@@ -3,7 +3,7 @@ import { Roboto } from "next/font/google";
 import { resolve } from "path";
 import React from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { formItems } from "./UserFormItems";
+import { formItems } from "../../../../components/users/UserFormItems";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BiUserCircle } from "react-icons/bi";

@@ -1,14 +1,31 @@
 "use client";
 
+import { deleteUser } from "@/app/services/UsersEndPoints";
 import React, { useEffect, useState } from "react";
-import { AiFillEdit, AiFillDelete, AiOutlineCloseCircle } from "react-icons/ai";
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { BeatLoader } from "react-spinners";
 
-type Props = { data: any; usersApiMessage?: string };
+type Props = {
+  data: any;
+  usersApiMessage?: string;
+  toggleUpdateUserFrom: any;
+  showToast: any;
+  callGetUsersEndPoint: any;
+};
 
 const UsersTable = (props: Props) => {
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<boolean>(false);
+
+  const handleDelete = async (id: string) => {
+    if (confirm("Please confirm to delete the user !") == true) {
+      const res = await deleteUser(id);
+      props.showToast("success", "user has been deleted");
+      props.callGetUsersEndPoint();
+    } else {
+      console.log(null);
+    }
+  };
 
   useEffect(() => {
     if (props.usersApiMessage === "no users found") {
@@ -21,7 +38,7 @@ const UsersTable = (props: Props) => {
   }, [props.data, props.usersApiMessage]);
 
   return (
-    <div className="p-2 relative shadow-md sm:rounded-lg">
+    <div className="p-2 relative shadow-md shadow-gray-400 sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-200 dark:text-gray-400 h-[50px] z-10">
           <tr>
@@ -104,14 +121,18 @@ const UsersTable = (props: Props) => {
                   scope="row"
                   className="px-2 py-2 font-medium max-w-[100px] break-words whitespace-break-spaces flex space-x-3"
                 >
-                  <AiFillEdit
-                    size={20}
-                    className="text-blue-500 cursor-pointer hover:text-blue-900"
-                  />
-                  <AiFillDelete
-                    size={20}
-                    className="text-red-500 cursor-pointer hover:text-red-900"
-                  />
+                  <div onClick={() => props.toggleUpdateUserFrom(item._id)}>
+                    <AiFillEdit
+                      size={20}
+                      className="text-blue-500 cursor-pointer hover:text-blue-900"
+                    />
+                  </div>
+                  <div onClick={() => handleDelete(item._id)}>
+                    <AiFillDelete
+                      size={20}
+                      className="text-red-500 cursor-pointer hover:text-red-900"
+                    />
+                  </div>
                 </td>
               </tr>
             ))
