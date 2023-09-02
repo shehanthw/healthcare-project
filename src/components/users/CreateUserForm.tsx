@@ -60,8 +60,8 @@ const CreateUserForm = (props: Props) => {
     const { confPassword, ...postData } = data;
     const res = await postUser(postData);
     props.setCreateUserFormOn(false);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     props.showToast("success", res);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     reset();
   };
   return (

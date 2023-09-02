@@ -1,13 +1,15 @@
 "use client";
 import { Roboto } from "next/font/google";
 import { resolve } from "path";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { formItems } from "@/components/drugs/DrugsFormItems";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AiFillCloseCircle } from "react-icons/ai";
-import { postDrug } from "@/app/services/DrugsEndPoints";
+import { getDrugs, postDrug, putDrug } from "@/app/services/DrugsEndPoints";
+import { data } from "autoprefixer";
+import { useLoaderContext } from "@/contexts/NavbarContext";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -15,7 +17,9 @@ const roboto = Roboto({
 });
 
 type Props = {
-  setCreateDrugFormOn: Dispatch<SetStateAction<boolean>>;
+  setUpdateDrugFormOn: Dispatch<SetStateAction<boolean>>;
+  userToUpdate?: DrugData; // Provide existing user data for update
+  updateId: string;
   showToast: any;
   getDataFromDatabase: any;
 };
@@ -37,26 +41,53 @@ const drugCreationSchema = z.object({
   quantity: z.string(),
 });
 
-const CreateDrugForm = (props: Props) => {
+const UpdateDrugForm = (props: Props) => {
+  const { setLoaderOn } = useLoaderContext();
+
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(drugCreationSchema),
   });
 
+  const existingUserData = async () => {
+    setLoaderOn(true);
+    const res = await getDrugs("", "", "", props.updateId);
+
+    const mfgDateRaw = res.drugs.mfgDate;
+    const mfgDate = mfgDateRaw.split("T")[0];
+
+    const expDateRaw = res.drugs.expDate;
+    const expDate = expDateRaw.split("T")[0];
+
+    const quantityInt = res.drugs.quantity;
+
+    setValue("drugName", res.drugs.drugName);
+    setValue("mfgDate", mfgDate);
+    setValue("expDate", expDate);
+    setValue("quantity", quantityInt.toString());
+    setLoaderOn(false);
+  };
+
   const onSubmit = async (data: FieldValues) => {
     const { ...postData } = data;
     postData.quantity = parseInt(postData.quantity);
-    const res = await postDrug(postData);
-    props.setCreateDrugFormOn(false);
+    const res = await putDrug(props.updateId, postData);
+    console.log(res);
+    props.setUpdateDrugFormOn(false);
     props.showToast("success", res);
     props.getDataFromDatabase();
     await new Promise((resolve) => setTimeout(resolve, 500));
     reset();
   };
+
+  useEffect(() => {
+    existingUserData();
+  }, [props.updateId]);
   return (
     <div className="absolute bg-black w-full h-full z-30 overflow-auto bg-opacity-10 backdrop-blur-sm backdrop-filter flex justify-center">
       <form
@@ -67,10 +98,10 @@ const CreateDrugForm = (props: Props) => {
           id="title"
           className="h-[60px] flex items-center pl-6 border font-medium text-gray-600 relative"
         >
-          Add New Drug
+          Update Drug
           <div
             className="absolute right-0 mr-2 top-0 mt-4"
-            onClick={() => props.setCreateDrugFormOn(false)}
+            onClick={() => props.setUpdateDrugFormOn(false)}
           >
             <AiFillCloseCircle
               size={25}
@@ -110,4 +141,4 @@ const CreateDrugForm = (props: Props) => {
   );
 };
 
-export default CreateDrugForm;
+export default UpdateDrugForm;
