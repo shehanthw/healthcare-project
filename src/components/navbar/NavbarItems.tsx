@@ -19,37 +19,31 @@ type NavMenuItems = {
 
 const menuItems: NavMenuItems = [
   {
+    icon: <AiFillEdit size={20} />,
+    title: "Medication",
+    isActive: false,
+    subItems: [
+      {
+        subName: "Appointments",
+        path: "/appointments",
+        icon: "VU",
+      },
+      {
+        subName: "Prescriptions",
+        path: "/prescriptions",
+        icon: "VU",
+      },
+    ],
+  },
+  {
     icon: <AiFillMedicineBox size={20} />,
     title: "Drugs Manager",
     isActive: false,
     subItems: [
       {
-        subName: "View Drugs",
+        subName: "Create & View Drugs",
         path: "/drugs",
         icon: "VD",
-      },
-      {
-        subName: "Create & Edit Drugs",
-        path: "/",
-        icon: "ED",
-      },
-    ],
-  },
-
-  {
-    icon: <AiFillEdit size={20} />,
-    title: "Document Manager",
-    isActive: false,
-    subItems: [
-      {
-        subName: "View Documents",
-        path: "/documents",
-        icon: "VU",
-      },
-      {
-        subName: "Create & Edit Documents",
-        path: "/documents/create",
-        icon: "EU",
       },
     ],
   },
