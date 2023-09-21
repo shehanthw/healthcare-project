@@ -8,9 +8,10 @@ const appointmentSchema = z.object({
     z.object({
       drugName: z.string(),
       amount: z.number(),
+      drugStatus: z.string().optional(),
     })
   ),
-  status: z.string(),
+  status: z.string().optional(),
   description: z.string(),
 });
 

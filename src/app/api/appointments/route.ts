@@ -122,8 +122,22 @@ export async function PUT(request: NextRequest) {
 
     await connectMongoDb();
     const response = await Appointments.findByIdAndUpdate(id, validatedData);
+
+    const allMedicsDispensed = response.medics.every(
+      (medic: any) => medic.drugStatus === "dispensed"
+    );
+
+    // Update the status based on the condition
+    if (allMedicsDispensed) {
+      response.status = "close";
+    } else {
+      response.status = "pending"; // Set it to another default value if needed
+    }
+
+    // Save the updated document
+    const updatedResponse = await response.save();
     return NextResponse.json(
-      { drugs: response, message: "apoointment updated" },
+      { drugs: updatedResponse, message: "apoointment updated" },
       { status: 200 }
     );
   } catch (error) {
